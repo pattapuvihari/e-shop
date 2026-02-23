@@ -1,0 +1,24 @@
+<div class="cart-container">
+    <h2>Shopping Cart</h2>
+    <div *ngIf="cartService.getCartItems()().length === 0" class="empty-cart">
+        Your Amazon Cart is empty.
+    </div>
+
+    <div *ngFor="let item of cartService.getCartItems()()" class="cart-item">
+        <div class="item-image">
+            <img [src]="item.imageUrl" [alt]="item.name">
+        </div>
+        <div class="item-details">
+            <h3>{{ item.name }}</h3>
+            <p class="stock">In Stock</p>
+            <div class="item-price">\${{ item.price }}</div>
+        </div>
+    </div>
+
+    <div class="cart-summary" *ngIf="cartService.getCartItems()().length > 0">
+        <div class="subtotal">
+            Subtotal ({{ cartService.cartCount() }} items): <b>\${{ total() | number:'1.2-2' }}</b>
+        </div>
+        <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+</div>

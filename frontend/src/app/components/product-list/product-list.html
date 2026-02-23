@@ -1,0 +1,91 @@
+<div class="product-page-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3>Filters</h3>
+
+        <div class="filter-section">
+            <h4>Brand</h4>
+            <div *ngFor="let brand of brands">
+                <label>
+                    <input type="checkbox" [(ngModel)]="selectedBrands[brand]" (change)="applyFilters()"> {{ brand }}
+                </label>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h4>Color</h4>
+            <div *ngFor="let color of colors">
+                <label>
+                    <input type="checkbox" [(ngModel)]="selectedColors[color]" (change)="applyFilters()"> {{ color }}
+                </label>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h4>Price</h4>
+            <div class="price-inputs">
+                <input type="number" placeholder="Min" [(ngModel)]="minPrice" (change)="applyFilters()">
+                <span>-</span>
+                <input type="number" placeholder="Max" [(ngModel)]="maxPrice" (change)="applyFilters()">
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h4>Avg. Customer Review</h4>
+            <div class="rating-filter" (click)="minRating = 4; applyFilters()" [class.selected]="minRating === 4">
+                <span class="stars">★★★★☆</span> & Up
+            </div>
+            <div class="rating-filter" (click)="minRating = 3; applyFilters()" [class.selected]="minRating === 3">
+                <span class="stars">★★★☆☆</span> & Up
+            </div>
+            <div class="rating-filter" (click)="minRating = 2; applyFilters()" [class.selected]="minRating === 2">
+                <span class="stars">★★☆☆☆</span> & Up
+            </div>
+            <div class="rating-filter" (click)="minRating = 1; applyFilters()" [class.selected]="minRating === 1">
+                <span class="stars">★☆☆☆☆</span> & Up
+            </div>
+            <div class="clear-filter" *ngIf="minRating || minPrice || maxPrice"
+                (click)="minRating = null; minPrice = null; maxPrice = null; applyFilters()">Clear Filters</div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <span>{{ filteredProducts.length }} results</span>
+            <div class="sort-options">
+                <label>Sort by:</label>
+                <select [(ngModel)]="sortBy" (change)="sortProducts()">
+                    <option value="featured">Featured</option>
+                    <option value="price-low-high">Price: Low to High</option>
+                    <option value="price-high-low">Price: High to Low</option>
+                    <option value="rating">Avg. Customer Review</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="product-grid">
+            <div *ngFor="let product of filteredProducts" class="product-card">
+                <div class="image-container" [routerLink]="['/product', product.id]" style="cursor: pointer;">
+                    <img [src]="product.imageUrl" [alt]="product.name">
+                </div>
+                <div class="product-details">
+                    <h3 [routerLink]="['/product', product.id]" style="cursor: pointer; color: #007185;">{{ product.name
+                        }}</h3>
+                    <div class="rating">
+                        <span *ngFor="let star of [1,2,3,4,5]; let i = index">
+                            <span [class.filled]="i < product.rating">★</span>
+                        </span>
+                        <span class="count">{{ product.rating }}</span>
+                    </div>
+                    <div class="price">${{ product.price }}</div>
+                    <p class="description">{{ product.description }}</p>
+                    <button class="add-to-cart" (click)="addToCart(product)">Add to Cart</button>
+                </div>
+            </div>
+            <div *ngIf="filteredProducts.length === 0" class="no-results">
+                No products found.
+            </div>
+        </div>
+    </div>
+</div>

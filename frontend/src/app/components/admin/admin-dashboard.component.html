@@ -1,0 +1,74 @@
+<div class="admin-container">
+    <h1>Admin Dashboard</h1>
+
+    <div class="message" *ngIf="message">{{ message }}</div>
+
+    <div class="search-section">
+        <h3>Edit Existing Product</h3>
+        <div class="search-box">
+            <input type="number" [(ngModel)]="searchId" placeholder="Enter Product ID">
+            <button (click)="searchProduct()">Search</button>
+            <button (click)="resetForm()">Clear</button>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h3>{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h3>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input [(ngModel)]="product.name" placeholder="Product Name">
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" [(ngModel)]="product.price" placeholder="Price">
+        </div>
+
+        <div class="form-group">
+            <label>Discount ($ off)</label>
+            <input type="number" [(ngModel)]="product.discount" placeholder="Discount Amount">
+        </div>
+
+        <div class="form-group">
+            <label>Short Description</label>
+            <textarea [(ngModel)]="product.description" rows="2"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Full Description</label>
+            <textarea [(ngModel)]="product.fullDescription" rows="5"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Image URL</label>
+            <input [(ngModel)]="product.imageUrl" placeholder="/assets/products/...">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Brand</label>
+                <input [(ngModel)]="product.brand" placeholder="Brand">
+            </div>
+            <div class="form-group">
+                <label>Color</label>
+                <input [(ngModel)]="product.color" placeholder="Color">
+            </div>
+            <div class="form-group">
+                <label>Rating</label>
+                <input type="number" [(ngModel)]="product.rating" step="0.1" max="5">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Specifications (JSON)</label>
+            <textarea [(ngModel)]="specsInput" rows="5" placeholder='{"Processor": "...", "RAM": "..."}'></textarea>
+        </div>
+
+        <div class="actions">
+            <button class="save-btn" (click)="saveProduct()">{{ isEditMode ? 'Update Product' : 'Create Product'
+                }}</button>
+            <button class="delete-btn" *ngIf="isEditMode" (click)="deleteProduct()">Delete Product</button>
+        </div>
+    </div>
+</div>

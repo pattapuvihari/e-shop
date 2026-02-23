@@ -1,0 +1,52 @@
+<div class="product-details-container" *ngIf="product; else loadingTpl">
+    <!-- Left: Image -->
+    <div class="image-section">
+        <img [src]="product.imageUrl" [alt]="product.name">
+    </div>
+
+    <!-- Center: Info -->
+    <div class="info-section">
+        <h1>{{ product.name }}</h1>
+        <div class="rating">
+            <span *ngFor="let star of [1,2,3,4,5]; let i = index">
+                <span [class.filled]="i < product.rating">★</span>
+            </span>
+            <span class="count">{{ product.rating }} out of 5 stars</span>
+        </div>
+        <hr>
+        <div class="price-section">
+            <span class="price-label">Price:</span>
+            <span class="price is-red">${{ product.price }}</span>
+        </div>
+        <div class="description">
+            <h3>About this item</h3>
+            <p>{{ product.fullDescription || product.description }}</p>
+        </div>
+
+        <div class="specs-section" *ngIf="product.specifications">
+            <h3>Technical Details</h3>
+            <table class="specs-table">
+                <tr *ngFor="let item of product.specifications | keyvalue">
+                    <th>{{ item.key }}</th>
+                    <td>{{ item.value }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Right: Buy Box -->
+    <div class="buy-box">
+        <div class="price">${{ product.price }}</div>
+        <div class="delivery-info">
+            FREE delivery <b>Tuesday, Feb 20</b>
+        </div>
+        <div class="stock-status">In Stock</div>
+        <button class="add-to-cart-btn" (click)="addToCart()">Add to Cart</button>
+        <button class="buy-now-btn">Buy Now</button>
+        <div class="secure-transaction">Secure transaction</div>
+    </div>
+</div>
+
+<ng-template #loadingTpl>
+    <div class="loading">Loading product details...</div>
+</ng-template>

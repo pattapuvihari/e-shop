@@ -1,0 +1,51 @@
+<div class="register-container">
+    <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo">
+    </div>
+    <div class="register-box">
+        <h1>Create account</h1>
+        <form (ngSubmit)="onSubmit()">
+            <label for="name">Your name</label>
+            <input type="text" id="name" [(ngModel)]="name" name="name" placeholder="First and last name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" [(ngModel)]="email" name="email" required>
+
+            <label for="phone">Mobile number</label>
+            <input type="tel" id="mobile" [(ngModel)]="phone" name="phone" placeholder="10-digit mobile number"
+                pattern="[0-9]{10}" required>
+
+            <label for="gender">Gender</label>
+            <select id="gender" [(ngModel)]="gender" name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" [(ngModel)]="dob" name="dob" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" [(ngModel)]="password" name="password"
+                placeholder="At least 6 characters" required minlength="6">
+            <div class="password-info"><i class="info-icon">i</i> Passwords must be at least 6 characters.</div>
+
+            <label for="confirmPassword">Re-enter password</label>
+            <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+
+            <button type="submit" class="continue-btn">Continue</button>
+        </form>
+        <div *ngIf="error" class="error-message">
+            {{ error }}
+        </div>
+        <div class="divider"></div>
+        <div class="signin-link">
+            Already have an account? <a routerLink="/login">Sign in</a>
+        </div>
+        <p class="terms">
+            By creating an account, you agree to Amazon's <a href="#">Conditions of Use</a> and <a href="#">Privacy
+                Notice</a>.
+        </p>
+    </div>
+</div>
